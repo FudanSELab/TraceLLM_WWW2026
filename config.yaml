@@ -1,0 +1,93 @@
+# output path
+output_path: ./output
+
+# dataset paths
+normal_dataset: ./dataset/raw_dataset/sampled_traces/normal_traces.json
+abnormal_dataset: ./dataset/raw_dataset/sampled_traces/abnormal_traces.json
+
+# Dataset Construction
+## TraceBench path
+trace_bench_dataset: ./dataset/TraceBench
+## dataset aug ratio
+aug_ratio: 0.3
+## dataset split ratio
+split_ratio: 0.7
+## processes num
+processes_num: 8
+## specification name
+specification: OpenTelemetry
+## trace description method
+desc_method: raw_spans_desc  # adjacency_table_desc, edge_list_desc, raw_spans_desc, xml_desc
+## template name
+instruction_template_name: instruction_template_without_input_traces    # instruction_template, instruction_template_with_input_traces, instruction_template_without_input_traces
+response_template_name: response_with_step_template    # response_with_step_template, response_without_step_template
+codeprompt_template_name: codeprompt_template
+
+# Graph2Token Fine-tuning
+model_name: graph_llm
+project: graph_prompt_tuning
+seed: 0
+lr: 1e-5       # 1e-5, 1e-3
+wd: 0.05
+patience: 2
+min_lr: 5e-6
+resume: ''
+with_transformers: False
+## model training
+batch_size: 3
+grad_steps: 2
+## learning rate scheduler
+num_epochs: 15
+warmup_epochs: 1
+## inference
+eval_batch_size: 2
+## LLM related
+llm_frozen: False
+llm_num_virtual_tokens: 10
+max_txt_len: 230  
+max_new_tokens: 2000   
+## LLM adapter
+adapter_len: 10
+adapter_layer: 30
+## distributed training parameters
+log_dir: ./output/logs/
+device: cuda
+world_size: 4
+local_rank: -1
+gpu: 1,2,3,4
+rank: 0
+dist_url: env://
+num_workers: 8
+dist_on_itp: False
+
+## GNN related
+gnn_model_name: gat
+gnn_pooling_type: add    # add, mean
+gnn_num_layers: 4
+gnn_hidden_dim: 1024
+gnn_out_dim: 1024
+gnn_num_heads: 4
+gnn_dropout: 0.0
+
+# llm parameters
+api_key: Your_API_Key
+api_base: Your_API_Base_URL
+model_name_api: gpt-4o
+
+# llm_name: Qwen2.5-14B-Instruct
+# llm_path: /path/to/Qwen2.5-14B-Instruct/
+
+# llm_name: Meta-Llama-3-8B-Instruct
+# llm_path: /path/to/Meta-Llama-3-8B-Instruct/
+
+# llm_name: Qwen2.5-7B-Instruct       
+# llm_path: /path/to/Qwen2.5-7B-Instruct/ 
+
+# llm_name: Qwen3-8B 
+# llm_path: /path/to/Qwen3-8B/
+
+# llm_name: Qwen2.5-1.5B
+# llm_path: /path/to/Qwen2.5-1.5B/
+
+llm_name: DeepSeek-R1-Distill-Llama-8B
+llm_path: /path/to/DeepSeek-R1-Distill-Llama-8B/
